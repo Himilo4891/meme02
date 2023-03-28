@@ -9,18 +9,20 @@ class TableViewController: UITableViewController {
     
     // MARK: - Properties
     
-    var memes = [Meme]()
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
+   
     // MARK: Life Cycle
 
    @IBOutlet var Table: UITableView!
     
    @IBOutlet var sortButton: UIBarButtonItem!
+    
+    var memes = [Meme]()
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
     // MARK: Life Cycle
        override func viewDidLoad() {
            super.viewDidLoad()
-           Table.reloadData()
+           Table.dataSource = self
            Table.delegate = self
        }
 
@@ -36,29 +38,26 @@ class TableViewController: UITableViewController {
         return 1
     }
     
-      
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return self.memes.count
  
  
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as! TableViewCell
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
             let meme = memes[(indexPath as NSIndexPath).row]
             
-            cell.memeTitle.text = meme.name
-            cell.memeImage?.image = UIImage(named: meme.imageName)
-            tableView.separatorColor = UIColor.black
-            
+        cell.memeTitle.text = meme.topText + " " + meme.bottomText
+        cell.memeImage?.image = meme.memedImage
+        tableView.separatorColor = UIColor.black
             
             return cell
         }
-        
-        
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return self.memes.count
                 
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-                let detailController = self.storyboard!.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+                let detailController = self.storyboard!.instantiateViewController(withIdentifier: "EditMemeViewController") as! EditMemeViewController
             _ = memes[(indexPath as NSIndexPath).row]
-                
+//            detailController.memeIsModified = self.memes[indexPath.item]
+//            detailController.indexD = indexPath.row
                 //Present the view controller using navigation
                 self.navigationController!.pushViewController(detailController, animated: true)
                 

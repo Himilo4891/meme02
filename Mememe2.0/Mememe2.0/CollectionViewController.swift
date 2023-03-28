@@ -37,35 +37,35 @@ class CollectionViewController:  UICollectionViewController, UICollectionViewDel
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
         memes = appDelegate.memes
-        setupNavigationBar()
-        memes = getMemes()
+//        setupNavigationBar()
+//        memes = getMemes()
         collectionView.reloadData()
         
     }
     
     // Setup Navigation Bar
-    private func setupNavigationBar() {
-        navigationController?.isNavigationBarHidden = false
-        self.tabBarController?.tabBar.isHidden = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createMeme))
-    }
-    
+//    private func setupNavigationBar() {
+//        navigationController?.isNavigationBarHidden = false
+//        self.tabBarController?.tabBar.isHidden = false
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createMeme))
+//    }
+//
     // Retrieve Saved Memes
-    private func getMemes() -> [Meme] {
-        let object = UIApplication.shared.delegate
-        let appDelegate = object as! AppDelegate
-        return appDelegate.memes
-    }
-    
-    
-    
-    @objc func createMeme() {
-        let ViewController = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "ViewController") as! ViewController
-        
-        self.navigationController?.pushViewController(ViewController, animated: true)
-    }
-    
-    
+//    private func getMemes() -> [Meme] {
+//        let object = UIApplication.shared.delegate
+//        let appDelegate = object as! AppDelegate
+//        return appDelegate.memes
+//    }
+//
+//
+//
+//    @objc func createMeme() {
+//        let ViewController = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "EditMemeViewController") as! EditMemeViewController
+//
+//        self.navigationController?.pushViewController(ViewController, animated: true)
+//    }
+//
+//
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return memes.count
@@ -79,8 +79,8 @@ class CollectionViewController:  UICollectionViewController, UICollectionViewDel
         
         //Set the image
         //          cell.imageView.image = Meme.memedImage
-        cell.labelView.text = meme.name
-        cell.imageView?.image = UIImage(named: meme.imageName)
+        cell.labelView.text = meme.topText
+        cell.imageView?.image = meme.memedImage
         
         return cell
         
@@ -92,7 +92,7 @@ class CollectionViewController:  UICollectionViewController, UICollectionViewDel
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailController = self.storyboard!.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
         detailController.meme = self.memes[indexPath.item]
-        detailController.meme = memes[(indexPath as NSIndexPath).row]
+        detailController.indexD = indexPath.row
         
         navigationController!.pushViewController(detailController, animated: true)
         

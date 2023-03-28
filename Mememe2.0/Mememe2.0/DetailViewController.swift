@@ -27,23 +27,22 @@ class DetailViewController: UIViewController {
         let object = UIApplication.shared.delegate
         let appDelegate = object as! AppDelegate
         let memeUpdated = appDelegate.memes[indexD ?? Int()]
-        memeImage.image = UIImage(named: meme.imageName)
-        
+        memeImage.image = memeUpdated.memedImage
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
     }
     @IBAction func editSavedMeme(_ sender: Any) {
-        let ViewController = self.storyboard!.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        let editMemeViewController = self.storyboard!.instantiateViewController(withIdentifier: "EditMemeViewController") as! EditMemeViewController
         
-        ViewController.savedMemeForEdit 
-        ViewController.indexE = indexD
+        editMemeViewController.savedMemeForEdit = meme
+        editMemeViewController.indexE = indexD
         
-        navigationController?.present(ViewController, animated: true, completion: nil)
-            ViewController.imagePickerView.contentMode = .scaleAspectFill
+        navigationController?.present(editMemeViewController, animated: true, completion: nil)
+        editMemeViewController.imagePickerView.contentMode = .scaleAspectFill
         
-        ViewController.memeIsModified = true
+        editMemeViewController.memeIsModified = true
 
     }
     

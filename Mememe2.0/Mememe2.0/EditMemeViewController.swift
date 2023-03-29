@@ -44,18 +44,19 @@ class EditMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         unSubscribeToKeyBoardNotifications()
         
     }
-    
+        
+    @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var navbar: UINavigationBar!
-    @IBOutlet weak var bottomTextField: UITextField!
+    @IBOutlet weak var Toolbar: UIToolbar!
     @IBOutlet weak var imagePickerView: UIImageView!
-    @IBOutlet weak var camerButton: UIBarButtonItem!
-    @IBOutlet weak var shareButton: UIBarButtonItem!
-    @IBOutlet weak var AlbumButton: UIBarButtonItem!
+    @IBOutlet weak var AlbumButton: UIButton!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
-    @IBOutlet weak var ToolBar: UIToolbar!
     @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var camerButton: UIButton!
     
+//    @IBOutlet weak var camerButton: UIButton!
     
     //    var memes = [Meme]()
     //    var editMeme : Meme?
@@ -257,7 +258,8 @@ class EditMemeViewController: UIViewController, UIImagePickerControllerDelegate,
         // doneButton!.isEnabled = show ? true : false // grey font of done becomes blue
     }
     
-    @IBAction func doneButtonTapped(sender: UIBarButtonItem) {
+    @IBAction func doneButtonTapped(_ sender: Any) {
+    
         let memedImage = generateMemedImage()
         
         let memeUpdated = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image ?? UIImage(), memedImage: memedImage)
